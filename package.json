@@ -1,8 +1,8 @@
 {
   "name": "sustainability",
   "version": "0.1.0",
-  "homepage": "https://waqaskaleem007.github.io/sustainability",
   "private": true,
+  "homepage": "https://waqaskaleem007.github.io/sustainability",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

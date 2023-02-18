@@ -1,90 +1,142 @@
-import web from "./images/web.jpg";
-import logo from "./images/logo.png";
+// import web from "./images/web.jpg";
+//import logo from "./images/logo.png";
 import { useState } from "react";
+//import BasicInformation from "./BasicInformation/BasicInformation";
 import "./App.css";
 
+let nextId = 0;
+
 function App() {
-  const [quantityOfCompost, setQuantityOfCompost] = useState("");
-  const [totalOrganicWaste, setTotalOrganicWaste] = useState("");
-  const [ratePerTon, setRatePerTon] = useState("");
+  const [hello1, setHello1] = useState("");
+  const [hello2, setHello2] = useState("");
+
+  const [isShown, setIsShown] = useState("");
+
+  const handelClick = (event) => {
+    setHello2(false);
+    setIsShown((current) => !current);
+  };
+  const handelClick2 = (event) => {
+    setIsShown(false);
+    setHello2((current) => !current);
+  };
+
+  //var cityInfo = [];
+
+  //   { zone: "", towns: [], ucs: 0, population: 0 }
+  const [zone, setZone] = useState("");
+  const [towns, setTowns] = useState("");
+  const [ucs, setucs] = useState("");
+  const [population, setpopulation] = useState("");
+  const [totalUcs, setTotalUcs] = useState(0);
+  const [totalPopulation, setTotalPopulation] = useState(0);
+  const [cityInfo1, setCityInfo1] = useState([]);
+  const [mw, setmw] = useState(0);
+  const [bw, setbw] = useState(0);
+
+  const handelSubmit = (event) => {
+    event.preventDefault();
+    var rowDict = {};
+    rowDict.zone = zone;
+    rowDict.towns = towns;
+    rowDict.ucs = ucs;
+    rowDict.population = population;
+    //cityInfo1.push(rowDict);
+    setCityInfo1((arr) => [
+      ...arr,
+      {
+        id: nextId++,
+        zone: zone,
+        towns: towns,
+        ucs: ucs,
+        population: population,
+        mw: mw,
+        bw: bw,
+      },
+    ]);
+    console.log(totalPopulation + parseInt(population));
+    console.log();
+    setTotalPopulation(totalPopulation + parseInt(population));
+    setTotalUcs(totalUcs + parseInt(ucs));
+  };
+
   return (
     <>
-      <div className="App">
-        <img src={web} className="App" alt="bg-img" />
-      </div>
-      <div className="main-bar">
-        <div className="bar">
-          <img src={logo} alt="" logo />
+      <div className="main-div">
+        <div className="div-menue">
+          <h1 onClick={handelClick}>Basic City Information</h1>
+          <h1 onClick={handelClick2}>Water Generation & major component</h1>
         </div>
-        <div className="bar">
-          <a href="#home">Eco Model-1</a>
-        </div>
-        <div className="bar">
-          <a href="#home">Eco Model-2</a>
-        </div>
-        <div className="bar">
-          <a href="#home">Eco Model-3</a>
-        </div>
-        <div className="bar">
-          <a href="#home">Qtm & Eco. Benefit</a>
-        </div>
-        <div className="bar">
-          <a href="#home">Scenarios </a>
-        </div>
-      </div>
-      <div className="main-bar2">
-        <div className="big-box">
-          <div className="box">
-            <label>
-              {" "}
-              Enter Quantity Of Compost
-              <input
-                type="text"
-                value={quantityOfCompost}
-                onChange={(e) => setQuantityOfCompost(e.target.value)}
-              />
-              {console.log(quantityOfCompost)}
-            </label>
+        {isShown && (
+          <div className="div-content">
+            {/* <BasicInformation /> */}
+            <div>
+              <div>
+                <label>
+                  {" "}
+                  Zone
+                  <input
+                    type="text"
+                    //   value={totalOrganicWaste}
+                    onChange={(e) => setZone(e.target.value)}
+                  />
+                </label>
+                <label>
+                  {" "}
+                  towns
+                  <input
+                    type="text"
+                    //   value={totalOrganicWaste}
+                    onChange={(e) => setTowns(e.target.value)}
+                  />
+                </label>
+                <label>
+                  {" "}
+                  ucs
+                  <input
+                    type="text"
+                    //   value={totalOrganicWaste}
+                    onChange={(e) => setucs(e.target.value)}
+                  />
+                </label>
+                <label>
+                  {" "}
+                  population
+                  <input
+                    type="text"
+                    //   value={totalOrganicWaste}
+                    onChange={(e) => setpopulation(e.target.value)}
+                  />
+                </label>
+                <button
+                  className="submit-btn"
+                  value="update"
+                  onClick={handelSubmit}
+                >
+                  Calculate
+                </button>
+                <div className="results">
+                  <ul>
+                    {cityInfo1.map((city) => (
+                      <li key={city.id}>
+                        {city.zone} {city.towns} {city.ucs} {city.population}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <p>Total Ucs : {totalUcs}</p>
+                <p>Total population{totalPopulation}</p>
+              </div>
+            </div>
           </div>
-          <div className="box">
-            <label>
-              {" "}
-              Enter Total Organic Wastes
-              <input
-                type="text"
-                value={totalOrganicWaste}
-                onChange={(e) => setTotalOrganicWaste(e.target.value)}
-              />
-              {console.log(totalOrganicWaste)}
-            </label>
+        )}
+        {hello2 && (
+          <div className="div-content">
+            <h1>hello 2</h1>
           </div>
-          <div className="box">
-            <label>
-              {" "}
-              Enter compost per ton rate
-              <input
-                type="text"
-                value={ratePerTon}
-                onChange={(e) => setRatePerTon(e.target.value)}
-              />
-              {console.log(ratePerTon)}
-            </label>
-          </div>
-          <button className="submit-btn" type="submit">
-            Calculate
-          </button>
-        </div>
-        <div className="big-box">
-          <div className="box">
-            <h3>Total Organic Waste is 697 Tons / day</h3>
-          </div>
-          <div className="box">
-            <h3>Total compost is 105 Tons / day</h3>
-          </div>
-          <div className="box">
-            <h3>Total revenue is 836400 Rs / Kg</h3>
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

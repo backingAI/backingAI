@@ -99,19 +99,6 @@ function App() {
               <h1 className="h1-sheet1">Enter Zone Information</h1>
             </div>
             <div>
-              <label>
-                {" "}
-                Enter Value R
-                <input
-                  type="text"
-                  onChange={(e) => setValueR(e.target.value)}
-                />
-              </label>
-              <div className="para-div">
-                <p className="zone-info-p">Value of R: {valueR}</p>
-              </div>
-            </div>
-            <div>
               <div>
                 <label>
                   {" "}
@@ -180,6 +167,19 @@ function App() {
             <div>
               <h1 className="h1-sheet1">Water Generation & major component</h1>
             </div>
+            <div>
+              <label>
+                {" "}
+                Enter Value R
+                <input
+                  type="text"
+                  onChange={(e) => setValueR(parseFloat(e.target.value))}
+                />
+              </label>
+              <div className="para-div">
+                <p className="zone-info-p">Value of R: {valueR}</p>
+              </div>
+            </div>
             {cityInfo1.map((city) => (
               <div className="sheet-2-inner-div">
                 <div className="para-div-1">
@@ -187,13 +187,14 @@ function App() {
                 </div>
                 <div className="para-div-1">
                   <p className="zone-info-p">
-                    SWG(Kg/d): {Math.round(city.population * parseInt(valueR))}
+                    SWG(Kg/d):{" "}
+                    {Math.round(city.population * parseFloat(valueR))}
                   </p>
                 </div>
                 <div className="para-div-1">
                   <p className="zone-info-p">
                     SWG(t/d):{" "}
-                    {Math.round((city.population * parseInt(valueR)) / 1000)}
+                    {Math.round((city.population * parseFloat(valueR)) / 1000)}
                   </p>
                 </div>
                 <div className="para-div-1">

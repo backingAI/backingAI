@@ -1,6 +1,21 @@
 .main-div {
   margin-top: 5%;
   display: flex;
+
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.7); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  margin: auto;
+  /* text-align: center; */
 }
 
 .div-menue {
@@ -10,4 +25,60 @@
 .div-content {
   margin-left: 10%;
   width: 90%;
+}
+
+.sheet-2-main-dev {
+  display: flex;
+}
+
+.sheet-2-inner-dev {
+  flex-direction: row;
+}
+
+label {
+  margin-left: 10px;
+}
+
+input {
+  margin-left: 5px;
+  border-radius: 15px;
+  /* border: 2px solid #73AD21; */
+  padding: 10px;
+  width: 100px;
+  height: 5px;
+}
+
+button {
+  margin-left: 20px;
+  border-radius: 15px;
+  /* border: 2px solid #73AD21; */
+  padding: 10px;
+  width: 100px;
+  height: auto;
+  /* height: 5px; */
+}
+
+.results {
+  /* display: flex; */
+  display: inline-block;
+}
+
+/* .result-inner {
+  flex-direction: row;
+  margin-left: 50px;
+} */
+
+.para-div {
+  display: inline-block;
+  margin-right: 150px;
+}
+
+.zone-info-p {
+  display: inline-block;
+  margin-left: 30px;
+}
+
+.para-div-1 {
+  display: inline-block;
+  margin-right: 100px;
 }

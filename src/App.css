@@ -7,14 +7,14 @@
   color: white;
   font-weight: bold;
   border: 3px solid #f1f1f1;
-  position: absolute;
+  /* position: absolute; */
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  /* transform: translate(-10%, -10%); */
   z-index: 2;
   width: 80%;
   padding: 20px;
-  margin: auto;
+  margin: 50px 100px;
   /* text-align: center; */
 }
 
@@ -81,4 +81,23 @@ button {
 .para-div-1 {
   display: inline-block;
   margin-right: 100px;
+}
+
+.h1-sheet1:hover {
+  cursor: default;
+  color: white;
+}
+
+h1:hover {
+  cursor: pointer;
+  color: rgb(106, 140, 204);
+}
+
+.border-div {
+  border: solid white;
+  margin-bottom: 20px;
+}
+
+.para-div-sheet3 {
+  display: inline-block;
 }

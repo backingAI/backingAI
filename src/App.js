@@ -1,16 +1,12 @@
-// import web from "./images/web.jpg";
-//import logo from "./images/logo.png";
 import { useState } from "react";
-//import BasicInformation from "./BasicInformation/BasicInformation";
 import "./App.css";
 
 let nextId = 0;
+let tempValue = 0;
 
 function App() {
-  const [hello1, setHello1] = useState("");
   const [hello2, setHello2] = useState("");
   const [sheet3, setSheet3] = useState("");
-
   const [isShown, setIsShown] = useState("");
 
   const handelClick = (event) => {
@@ -23,16 +19,12 @@ function App() {
     setSheet3(false);
     setHello2((current) => !current);
   };
-
   const handelClick3 = (event) => {
     setIsShown(false);
     setHello2(false);
     setSheet3((current) => !current);
   };
 
-  //var cityInfo = [];
-
-  //   { zone: "", towns: [], ucs: 0, population: 0 }
   const [zone, setZone] = useState("");
   const [towns, setTowns] = useState("");
   const [ucs, setucs] = useState("");
@@ -40,11 +32,25 @@ function App() {
   const [cityInfo1, setCityInfo1] = useState([]);
   const [mw, setmw] = useState(0);
   const [bw, setbw] = useState(0);
+  const [valueR, setValueR] = useState(0);
+  const [valueCWsm, setvalueCWsm] = useState(0);
+  const [valueCWmm, setvalueCWmm] = useState(0);
+  const [valueCWlm, setvalueCWlm] = useState(0);
+  const [valueCWxlm, setvalueCWxlm] = useState(0);
+  const [defaultCWsm, setdefaultCWsm] = useState(0);
+  const [defaultCWmm, setdefaultCWmm] = useState(0);
+  const [defaultCWlm, setdefaultCWlm] = useState(0);
+  const [defaultCWxlm, setdefaultCWxlm] = useState(0);
+  //const [tempValue, setTemValue] = useState(0);
 
   const [totalUcs, setTotalUcs] = useState(0);
   const [totalPopulation, setTotalPopulation] = useState(0);
   const [totalSWG, setTotalSWG] = useState(0);
   const [totalMSW, settotalMSW] = useState(0);
+  const [totalSheet3ZoneVal1, setTotalSheet3ZoneVal1] = useState(0);
+  const [totalSheet3ZoneVal2, setTotalSheet3ZoneVal2] = useState(0);
+  const [totalSheet3ZoneVal3, setTotalSheet3ZoneVal3] = useState(0);
+  const [totalSheet3ZoneVal4, setTotalSheet3ZoneVal4] = useState(0);
 
   const handelSubmit = (event) => {
     event.preventDefault();
@@ -63,11 +69,20 @@ function App() {
         population: population,
         mw: 0,
         bw: 0,
+        sheet3ZoneVal: 0,
+        entityValue1: 0,
+        entityValue2: 0,
+        entityValue3: 0,
+        entityValue4: 0,
+        c5m3: 0,
+        c13m3: 0,
+        c7m3: 0,
+        c25m3: 0,
       },
     ]);
     setTotalPopulation(totalPopulation + parseInt(population));
     setTotalUcs(totalUcs + parseInt(ucs));
-    setTotalSWG(Math.round(totalPopulation / 0.54));
+    setTotalSWG(Math.round(totalPopulation / parseInt(valueR)));
   };
 
   return (
@@ -81,7 +96,20 @@ function App() {
         {isShown && (
           <div className="div-content">
             <div>
-              <h1>Enter Zone Information</h1>
+              <h1 className="h1-sheet1">Enter Zone Information</h1>
+            </div>
+            <div>
+              <label>
+                {" "}
+                Enter Value R
+                <input
+                  type="text"
+                  onChange={(e) => setValueR(e.target.value)}
+                />
+              </label>
+              <div className="para-div">
+                <p className="zone-info-p">Value of R: {valueR}</p>
+              </div>
             </div>
             <div>
               <div>
@@ -149,22 +177,9 @@ function App() {
         )}
         {hello2 && (
           <div className="div-content">
-            {/* <div className="para-div-1">
-              <h3>Zone</h3>
+            <div>
+              <h1 className="h1-sheet1">Water Generation & major component</h1>
             </div>
-            <div className="para-div-1">
-              <h3>SWG(kg/d)</h3>
-            </div>
-            <div className="para-div-1">
-              <h3>SWG(t/d)</h3>
-            </div>
-            <div className="para-div-1">
-              <h3>%MW</h3>
-            </div>
-            <div className="para-div-1">
-              <h3>%BW</h3>
-            </div> */}
-            {/* <div className="sheet-2-main-dev"> */}
             {cityInfo1.map((city) => (
               <div className="sheet-2-inner-div">
                 <div className="para-div-1">
@@ -172,12 +187,13 @@ function App() {
                 </div>
                 <div className="para-div-1">
                   <p className="zone-info-p">
-                    SWG(Kg/d): {Math.round(city.population * 0.54)}
+                    SWG(Kg/d): {Math.round(city.population * parseInt(valueR))}
                   </p>
                 </div>
                 <div className="para-div-1">
                   <p className="zone-info-p">
-                    SWG(t/d): {Math.round((city.population * 0.54) / 1000)}
+                    SWG(t/d):{" "}
+                    {Math.round((city.population * parseInt(valueR)) / 1000)}
                   </p>
                 </div>
                 <div className="para-div-1">
@@ -195,8 +211,9 @@ function App() {
                           settotalMSW(
                             totalMSW +
                               Math.round(
-                                Math.round((city.population * 0.54) / 1000) *
-                                  city.bw
+                                Math.round(
+                                  (city.population * parseInt(valueR)) / 1000
+                                ) * city.bw
                               )
                           );
                         }}
@@ -213,12 +230,14 @@ function App() {
 
                 <p>
                   {Math.round(
-                    Math.round((city.population * 0.54) / 1000) * city.mw
+                    Math.round((city.population * parseInt(valueR)) / 1000) *
+                      city.mw
                   )}
                 </p>
                 <p>
                   {Math.round(
-                    Math.round((city.population * 0.54) / 1000) * city.bw
+                    Math.round((city.population * parseInt(valueR)) / 1000) *
+                      city.bw
                   )}
                 </p>
               </div>
@@ -231,7 +250,382 @@ function App() {
         )}
         {sheet3 && (
           <div className="div-content">
-            <h1>sheet 3</h1>
+            <div>
+              <h1 className="h1-sheet1">Commercial Waste</h1>
+            </div>
+            <div className="border-div">
+              <div>
+                <label>
+                  {" "}
+                  Enter Value CW(sm)
+                  <input
+                    type="text"
+                    onChange={(e) => setvalueCWsm(e.target.value)}
+                  />
+                </label>
+                <div className="para-div">
+                  <p className="zone-info-p">Value of CW(sm): {valueCWsm}</p>
+                </div>
+              </div>
+              <div>
+                <label>
+                  {" "}
+                  Enter Value CW(mm)
+                  <input
+                    type="text"
+                    onChange={(e) => setvalueCWmm(e.target.value)}
+                  />
+                </label>
+                <div className="para-div">
+                  <p className="zone-info-p">Value of CW(mm): {valueCWmm}</p>
+                </div>
+              </div>
+              <div>
+                <label>
+                  {" "}
+                  Enter Value CW(lm)
+                  <input
+                    type="text"
+                    onChange={(e) => setvalueCWlm(e.target.value)}
+                  />
+                </label>
+                <div className="para-div">
+                  <p className="zone-info-p">Value of CW(lm): {valueCWlm}</p>
+                </div>
+              </div>
+              <div>
+                <label>
+                  {" "}
+                  Enter Value CW(xlm)
+                  <input
+                    type="text"
+                    onChange={(e) => setvalueCWxlm(e.target.value)}
+                  />
+                </label>
+                <div className="para-div">
+                  <p className="zone-info-p">Value of CW(xlm): {valueCWxlm}</p>
+                </div>
+              </div>
+            </div>
+            <div className="border-div">
+              <div>
+                <label>
+                  {" "}
+                  Enter Default Value CW(sm)
+                  <input
+                    type="text"
+                    onChange={(e) => setdefaultCWsm(e.target.value)}
+                  />
+                </label>
+                <div className="para-div">
+                  <p className="zone-info-p">
+                    Default Value of CW(sm): {defaultCWsm}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <label>
+                  {" "}
+                  Enter Default Value CW(mm)
+                  <input
+                    type="text"
+                    onChange={(e) => setdefaultCWmm(e.target.value)}
+                  />
+                </label>
+                <div className="para-div">
+                  <p className="zone-info-p">
+                    Default Value of CW(mm): {defaultCWmm}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <label>
+                  {" "}
+                  Enter Default Value CW(lm)
+                  <input
+                    type="text"
+                    onChange={(e) => setdefaultCWlm(e.target.value)}
+                  />
+                </label>
+                <div className="para-div">
+                  <p className="zone-info-p">
+                    Default Value of CW(lm): {defaultCWlm}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <label>
+                  {" "}
+                  Enter Default Value CW(xlm)
+                  <input
+                    type="text"
+                    onChange={(e) => setdefaultCWxlm(e.target.value)}
+                  />
+                </label>
+                <div className="para-div">
+                  <p className="zone-info-p">
+                    Default Value of CW(xlm): {defaultCWxlm}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="border-div">
+              <div>
+                {cityInfo1.map((city) => (
+                  <div>
+                    <div className="para-div-sheet3">
+                      <p className="zone-info-p">
+                        Enter Entity values for {city.zone}
+                      </p>
+                    </div>
+                    <label>
+                      {" "}
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          setTotalSheet3ZoneVal1(0);
+                          city.entityValue1 = e.target.value;
+                          setTotalSheet3ZoneVal1(
+                            parseInt(totalSheet3ZoneVal1) +
+                              parseInt(e.target.value) * parseInt(defaultCWsm)
+                          );
+                          city.sheet3ZoneVal =
+                            city.sheet3ZoneVal +
+                            city.entityValue1 * parseInt(defaultCWsm);
+                        }}
+                      />
+                    </label>
+                    <label>
+                      {" "}
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          city.entityValue2 = e.target.value;
+                          setTotalSheet3ZoneVal1(
+                            parseInt(totalSheet3ZoneVal1) +
+                              parseInt(e.target.value) * parseInt(defaultCWmm)
+                          );
+                          city.sheet3ZoneVal =
+                            city.sheet3ZoneVal +
+                            city.entityValue2 * parseInt(defaultCWmm);
+                        }}
+                      />
+                    </label>
+                    <label>
+                      {" "}
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          city.entityValue3 = e.target.value;
+                          setTotalSheet3ZoneVal1(
+                            parseInt(totalSheet3ZoneVal1) +
+                              parseInt(e.target.value) * parseInt(defaultCWlm)
+                          );
+                          city.sheet3ZoneVal =
+                            city.sheet3ZoneVal +
+                            city.entityValue3 * parseInt(defaultCWlm);
+                        }}
+                      />
+                    </label>
+                    <label>
+                      {" "}
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          city.entityValue4 = e.target.value;
+                          setTotalSheet3ZoneVal1(
+                            parseInt(totalSheet3ZoneVal1) +
+                              parseInt(e.target.value) * parseInt(defaultCWxlm)
+                          );
+                          city.sheet3ZoneVal =
+                            city.sheet3ZoneVal +
+                            city.entityValue4 * parseInt(defaultCWxlm);
+                          console.log(city.entityValue4);
+                          console.log(city.sheet3ZoneVal);
+                        }}
+                      />
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border-div">
+              <div>
+                {cityInfo1.map((city) => (
+                  <div>
+                    <div className="para-div-sheet3">
+                      <p className="zone-info-p">
+                        Value of {city.zone}: {city.sheet3ZoneVal}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border-div">
+              <div>
+                {cityInfo1.map((city) => (
+                  <div>
+                    <div className="para-div-sheet3">
+                      <p className="zone-info-p">
+                        Enter % value of car for {city.zone}
+                      </p>
+                    </div>
+                    <label>
+                      {" "}
+                      %(car5m3)CW:
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          city.c5m3 = e.target.value;
+                        }}
+                      />
+                    </label>
+                    <label>
+                      {" "}
+                      %(car13m3)CW:
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          city.c13m3 = e.target.value;
+                        }}
+                      />
+                    </label>
+                    <label>
+                      {" "}
+                      %(car7m3)CW:
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          city.c7m3 = e.target.value;
+                        }}
+                      />
+                    </label>
+                    <label>
+                      {" "}
+                      %(car25m3)CW:
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          city.c25m3 = e.target.value;
+                        }}
+                      />
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border-div">
+              <div>
+                {cityInfo1.map((city) => (
+                  <div>
+                    <div className="para-div-sheet3">
+                      <p className="zone-info-p">{city.zone} CW(car5m3)%</p>
+                      <p className="zone-info-p">
+                        {Math.round(parseFloat(city.c5m3) * city.sheet3ZoneVal)}
+                      </p>
+                      <p className="zone-info-p">{city.zone} CW(car13m3)%</p>
+                      <p className="zone-info-p">
+                        {Math.round(
+                          parseFloat(city.c13m3) * city.sheet3ZoneVal
+                        )}
+                      </p>
+                      <p className="zone-info-p">{city.zone} CW(car7m3)%</p>
+                      <p className="zone-info-p">
+                        {Math.round(parseFloat(city.c7m3) * city.sheet3ZoneVal)}
+                      </p>
+                      <p className="zone-info-p">{city.zone} CW(car25m3)%</p>
+                      <p className="zone-info-p">
+                        {Math.round(
+                          parseFloat(city.c25m3) * city.sheet3ZoneVal
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border-div">
+              <div>
+                {cityInfo1.map((city) => (
+                  <div>
+                    <div className="para-div-sheet3">
+                      <p className="zone-info-p">{city.zone} Qty(crm5m3)CW</p>
+                      <p className="zone-info-p">
+                        {Math.round(
+                          Math.round(
+                            parseFloat(city.c5m3) * city.sheet3ZoneVal
+                          ) /
+                            (2.5 * 5)
+                        )}
+                      </p>
+                      <p className="zone-info-p">{city.zone} Qty(crm13m3)CW</p>
+                      <p className="zone-info-p">
+                        {Math.round(
+                          Math.round(
+                            parseFloat(city.c13m3) * city.sheet3ZoneVal
+                          ) /
+                            (2.5 * 5)
+                        )}
+                      </p>
+                      <p className="zone-info-p">{city.zone} Qty(crm7m3)CW</p>
+                      <p className="zone-info-p">
+                        {Math.round(
+                          Math.round(
+                            parseFloat(city.c7m3) * city.sheet3ZoneVal
+                          ) /
+                            (2.5 * 5)
+                        )}
+                      </p>
+                      <p className="zone-info-p">{city.zone} Qty(crm25m3)CW</p>
+                      <p className="zone-info-p">
+                        {Math.round(
+                          Math.round(
+                            parseFloat(city.c25m3) * city.sheet3ZoneVal
+                          ) /
+                            (2.5 * 5)
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border-div">
+              <div>
+                {cityInfo1.map((city) => (
+                  <div>
+                    <div className="para-div-sheet3">
+                      <p className="zone-info-p">{city.zone} Qty(wsc5m3)CW</p>
+                      <p className="zone-info-p">
+                        {Math.round(
+                          (Math.round(
+                            parseFloat(city.c5m3) * city.sheet3ZoneVal
+                          ) *
+                            1000) /
+                            2500
+                        )}
+                      </p>
+                      <p className="zone-info-p">
+                        {city.zone} Qty (wsc0.8m3)CW
+                      </p>
+                      <p className="zone-info-p">
+                        {Math.round(
+                          (Math.round(
+                            (parseFloat(city.c13m3) +
+                              parseFloat(city.c7m3) +
+                              parseFloat(city.c25m3)) *
+                              city.sheet3ZoneVal
+                          ) *
+                            1000) /
+                            2500
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>
